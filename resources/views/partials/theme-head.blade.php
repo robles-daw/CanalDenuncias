@@ -288,6 +288,10 @@
         color: var(--muted-2);
     }
 
+    input[type="text"] {
+        background: #EEF3F8;
+    }
+
     input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):hover,
     select:hover,
     textarea:hover {

@@ -172,6 +172,10 @@
             transition: border-bottom-color 0.18s ease, box-shadow 0.18s ease;
         }
 
+        input[type="text"] {
+            background: #EEF3F8;
+        }
+
         input:not([type="file"]):focus {
             outline: none;
             border-bottom-color: var(--accent);
