@@ -810,11 +810,13 @@
             padding: 16px 28px;
         }
 
-        .semi-footer {
+        .semi-footer,
+        .legal-links,
+        .legal-links-display {
             display: none;
         }
 
-        .legal-links {
+        .legal-links-display-clean {
             margin-top: 24px;
             display: grid;
             gap: 14px;
@@ -824,20 +826,20 @@
             border: 1px solid color-mix(in srgb, var(--accent) 18%, rgba(22, 32, 42, 0.08));
         }
 
-        .legal-links strong {
+        .legal-links-display-clean strong {
             font-size: 0.74rem;
             letter-spacing: 0.12em;
             text-transform: uppercase;
             color: var(--muted);
         }
 
-        .legal-links-row {
+        .legal-links-display-clean-row {
             display: flex;
             flex-wrap: wrap;
             gap: 12px;
         }
 
-        .legal-links-row a {
+        .legal-links-display-clean-row a {
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -854,7 +856,7 @@
             box-shadow: 0 12px 24px color-mix(in srgb, var(--accent) 18%, transparent);
         }
 
-        .legal-links-row a:hover {
+        .legal-links-display-clean-row a:hover {
             transform: translateY(-1px);
             filter: saturate(1.05) brightness(0.98);
         }
@@ -1063,6 +1065,24 @@
                     <button type="submit">Enviar denuncia</button>
                 </div>
             </form>
+
+            <div class="legal-links-display-clean">
+                <strong>Informaci&oacute;n legal</strong>
+                <div class="legal-links-display-clean-row">
+                    <a href="{{ $empresa->politica_privacidad_url }}" target="_blank" rel="noopener noreferrer">Pol&iacute;tica de privacidad</a>
+                    <a href="{{ $empresa->politica_cookies_url }}" target="_blank" rel="noopener noreferrer">Pol&iacute;tica de cookies</a>
+                    <a href="{{ $empresa->aviso_legal_url }}" target="_blank" rel="noopener noreferrer">Aviso legal</a>
+                </div>
+            </div>
+
+            <div class="legal-links-display">
+                <strong>Información legal</strong>
+                <div class="legal-links-display-row">
+                    <a href="{{ $empresa->politica_privacidad_url }}" target="_blank" rel="noopener noreferrer">Política de privacidad</a>
+                    <a href="{{ $empresa->politica_cookies_url }}" target="_blank" rel="noopener noreferrer">Política de cookies</a>
+                    <a href="{{ $empresa->aviso_legal_url }}" target="_blank" rel="noopener noreferrer">Aviso legal</a>
+                </div>
+            </div>
 
             <div class="legal-links">
                 <strong>Información legal</strong>
