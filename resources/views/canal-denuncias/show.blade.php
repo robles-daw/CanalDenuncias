@@ -214,7 +214,8 @@
             gap: 14px;
             padding: 18px;
             border-radius: var(--radius-lg);
-            background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 78%, white) 0%, color-mix(in srgb, var(--accent-deep) 88%, var(--accent)) 100%);
+            background: #fff;
+	    border: 1px solid var(--accent);
             color: var(--accent-contrast);
         }
 
@@ -248,6 +249,10 @@
             height: 36px;
             color: #fff;
         }
+ 	
+	.brand-meta {
+	    color: #000
+	}
 
         .brand-copy strong,
         .side-note strong {
