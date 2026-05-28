@@ -615,6 +615,21 @@
                                     <span>Sin documento cargado</span>
                                 @endif
                             </div>
+
+                            <div class="meta-item">
+                                <strong>Política de privacidad</strong>
+                                <a href="{{ old('politica_privacidad_url', $empresa->politica_privacidad_url ?: '#') }}" target="_blank" rel="noopener noreferrer">{{ old('politica_privacidad_url', $empresa->politica_privacidad_url ?: 'Sin definir') }}</a>
+                            </div>
+
+                            <div class="meta-item">
+                                <strong>Política de cookies</strong>
+                                <a href="{{ old('politica_cookies_url', $empresa->politica_cookies_url ?: '#') }}" target="_blank" rel="noopener noreferrer">{{ old('politica_cookies_url', $empresa->politica_cookies_url ?: 'Sin definir') }}</a>
+                            </div>
+
+                            <div class="meta-item">
+                                <strong>Aviso legal</strong>
+                                <a href="{{ old('aviso_legal_url', $empresa->aviso_legal_url ?: '#') }}" target="_blank" rel="noopener noreferrer">{{ old('aviso_legal_url', $empresa->aviso_legal_url ?: 'Sin definir') }}</a>
+                            </div>
                         </div>
                     </section>
                 </aside>

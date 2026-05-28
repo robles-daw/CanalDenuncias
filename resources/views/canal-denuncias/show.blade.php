@@ -810,6 +810,55 @@
             padding: 16px 28px;
         }
 
+        .semi-footer {
+            display: none;
+        }
+
+        .legal-links {
+            margin-top: 24px;
+            display: grid;
+            gap: 14px;
+            padding: 18px 20px;
+            border-radius: var(--radius-lg);
+            background: color-mix(in srgb, var(--accent) 8%, white);
+            border: 1px solid color-mix(in srgb, var(--accent) 18%, rgba(22, 32, 42, 0.08));
+        }
+
+        .legal-links strong {
+            font-size: 0.74rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        .legal-links-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .legal-links-row a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 42px;
+            padding: 0 16px;
+            border-radius: 999px;
+            background: var(--accent);
+            color: var(--accent-contrast);
+            border: 1px solid color-mix(in srgb, var(--accent) 82%, black);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 700;
+            transition: transform 0.18s var(--ease), box-shadow 0.18s var(--ease), filter 0.18s var(--ease);
+            box-shadow: 0 12px 24px color-mix(in srgb, var(--accent) 18%, transparent);
+        }
+
+        .legal-links-row a:hover {
+            transform: translateY(-1px);
+            filter: saturate(1.05) brightness(0.98);
+        }
+
         .glass {}
 
         @media (max-width: 1080px) {
@@ -1014,6 +1063,15 @@
                     <button type="submit">Enviar denuncia</button>
                 </div>
             </form>
+
+            <div class="legal-links">
+                <strong>Información legal</strong>
+                <div class="legal-links-row">
+                    <a href="{{ $empresa->politica_privacidad_url }}" target="_blank" rel="noopener noreferrer">Política de privacidad</a>
+                    <a href="{{ $empresa->politica_cookies_url }}" target="_blank" rel="noopener noreferrer">Política de cookies</a>
+                    <a href="{{ $empresa->aviso_legal_url }}" target="_blank" rel="noopener noreferrer">Aviso legal</a>
+                </div>
+            </div>
 
             <div class="semi-footer">
                 <a href="{{ $empresa->politica_privacidad_url }}" target="_blank" rel="noopener noreferrer">Política de privacidad</a>
