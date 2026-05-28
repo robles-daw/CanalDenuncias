@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Canal de denuncias · {{ $empresa->nombre }}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -13,6 +14,8 @@
             --accent-deep: {{ $empresa->color_secundario_hex }};
             --accent-contrast: {{ $empresa->color_principal_contrast }};
             --accent-deep-contrast: {{ $empresa->color_secundario_contrast }};
+            --field-accent: {{ $empresa->color_principal_form_accent }};
+            --field-accent-soft: {{ $empresa->color_principal_form_accent_soft }};
             --ink: #16202a;
             --ink-soft: #45515f;
             --muted: #687483;
@@ -298,12 +301,12 @@
         }
 
         .brand-info-row span,
-	.brand-info-row a {
-    	    font-size: 0.9rem;
-   	    line-height: 1.5;
-   	    color: var(--accent);
-   	    word-break: break-word;
-	}
+        .brand-info-row a {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: var(--field-accent);
+            word-break: break-word;
+        }
 
         .button,
         button {
@@ -392,19 +395,19 @@
         input[type="text"],
         input[type="email"],
         input[type="date"],
-        input[type="file"],
         textarea,
         .search-input {
             width: 100%;
             font: inherit;
             font-size: 0.95rem;
             color: var(--ink);
-            background: var(--surface);
-            border: 1px solid var(--line-strong);
-            border-radius: var(--radius-md);
-            padding: 14px 16px;
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid var(--field-accent-soft);
+            border-radius: 0;
+            padding: 14px 0 12px;
             outline: none;
-            transition: border-color 0.18s var(--ease), box-shadow 0.18s var(--ease);
+            transition: border-bottom-color 0.18s var(--ease), box-shadow 0.18s var(--ease);
         }
 
         textarea {
@@ -413,30 +416,182 @@
             line-height: 1.6;
         }
 
-        input:focus,
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="date"]:focus,
         textarea:focus,
         .search-input:focus {
-            border-color: var(--ui-focus);
-            box-shadow: 0 0 0 4px rgba(61, 88, 117, 0.12);
+            border-bottom-color: var(--field-accent);
+            box-shadow: inset 0 -1px 0 var(--field-accent);
         }
 
         input[type="file"] {
-            background: var(--surface-soft);
-            padding: 9px 10px 9px 14px;
+            min-height: 47px;
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid var(--field-accent-soft);
+            border-radius: 0;
+            padding: 13px 0 12px;
             cursor: pointer;
+            color: var(--muted);
+            transition: border-bottom-color 0.18s var(--ease), box-shadow 0.18s var(--ease);
+        }
+
+        input[type="file"]:focus {
+            border-bottom-color: var(--field-accent);
+            box-shadow: inset 0 -1px 0 var(--field-accent);
         }
 
         input[type="file"]::file-selector-button {
             font-family: inherit;
             font-size: 0.84rem;
             font-weight: 700;
-            border: 1px solid var(--ui-edge);
-            border-radius: 999px;
-            background: var(--surface);
-            color: var(--ink);
-            padding: 8px 12px;
+            border: 0;
+            border-bottom: 2px solid var(--field-accent);
+            border-radius: 0;
+            background: transparent;
+            color: var(--field-accent);
+            padding: 0 0 2px;
             margin-right: 12px;
             cursor: pointer;
+            vertical-align: baseline;
+        }
+
+        .flatpickr-calendar {
+            width: 320px;
+            padding: 18px 18px 14px;
+            border: 1px solid color-mix(in srgb, var(--field-accent) 18%, rgba(22, 32, 42, 0.08));
+            border-radius: 22px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(247, 250, 253, 0.98) 100%);
+            box-shadow: 0 26px 58px rgba(22, 32, 42, 0.16);
+        }
+
+        .flatpickr-calendar.arrowTop::before,
+        .flatpickr-calendar.arrowTop::after {
+            display: none;
+        }
+
+        .flatpickr-months {
+            align-items: center;
+            margin-bottom: 14px;
+        }
+
+        .flatpickr-months .flatpickr-prev-month,
+        .flatpickr-months .flatpickr-next-month {
+            top: 16px;
+            width: 34px;
+            height: 34px;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 999px;
+            color: var(--field-accent);
+            transition: background 0.18s var(--ease), color 0.18s var(--ease), transform 0.18s var(--ease);
+        }
+
+        .flatpickr-months .flatpickr-prev-month svg,
+        .flatpickr-months .flatpickr-next-month svg {
+            display: block;
+            width: 18px;
+            height: 18px;
+        }
+
+        .flatpickr-months .flatpickr-prev-month:hover,
+        .flatpickr-months .flatpickr-next-month:hover {
+            background: color-mix(in srgb, var(--field-accent) 12%, white);
+            color: var(--field-accent);
+            transform: translateY(-1px);
+        }
+
+        .flatpickr-current-month {
+            left: 0;
+            width: 100%;
+            padding: 0 44px;
+            font-family: "Source Serif 4", Georgia, serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--ink);
+        }
+
+        .flatpickr-current-month .flatpickr-monthDropdown-months,
+        .flatpickr-current-month input.cur-year {
+            font: inherit;
+            color: inherit;
+            background: transparent;
+        }
+
+        .flatpickr-current-month .numInputWrapper:hover,
+        .flatpickr-current-month .flatpickr-monthDropdown-months:hover {
+            background: transparent;
+        }
+
+        span.flatpickr-weekday {
+            color: var(--muted);
+            font-size: 0.82rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .flatpickr-weekdays {
+            margin-bottom: 6px;
+        }
+
+        .flatpickr-days,
+        .flatpickr-innerContainer,
+        .flatpickr-rContainer,
+        .dayContainer {
+            width: 100%;
+            min-width: 100%;
+            max-width: 100%;
+        }
+
+        .flatpickr-day {
+            border-radius: 12px;
+            border: 1px solid transparent;
+            color: var(--ink);
+            font-weight: 600;
+            line-height: 38px;
+        }
+
+        .flatpickr-day:hover {
+            background: color-mix(in srgb, var(--field-accent) 12%, white);
+            border-color: color-mix(in srgb, var(--field-accent) 22%, white);
+        }
+
+        .flatpickr-day.today {
+            border-color: color-mix(in srgb, var(--field-accent) 48%, white);
+            color: var(--field-accent);
+        }
+
+        .flatpickr-day.selected,
+        .flatpickr-day.startRange,
+        .flatpickr-day.endRange,
+        .flatpickr-day.selected:hover,
+        .flatpickr-day.startRange:hover,
+        .flatpickr-day.endRange:hover {
+            background: linear-gradient(135deg, var(--field-accent) 0%, color-mix(in srgb, var(--field-accent) 72%, white) 100%);
+            border-color: var(--field-accent);
+            color: #fff;
+            box-shadow: 0 12px 24px color-mix(in srgb, var(--field-accent) 24%, transparent);
+        }
+
+        .flatpickr-day.flatpickr-disabled,
+        .flatpickr-day.flatpickr-disabled:hover,
+        .flatpickr-day.prevMonthDay,
+        .flatpickr-day.nextMonthDay {
+            color: color-mix(in srgb, var(--muted) 72%, white);
+        }
+
+        .flatpickr-day.prevMonthDay:hover,
+        .flatpickr-day.nextMonthDay:hover {
+            background: transparent;
+            border-color: transparent;
+        }
+
+        .flatpickr-monthDropdown-months,
+        .numInput.cur-year {
+            pointer-events: none;
         }
 
         .search-results {
@@ -532,39 +687,50 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            padding: 14px 16px;
-            border: 1px solid var(--ui-edge);
-            border-radius: var(--radius-md);
-            background: var(--ui-tint);
+            padding: 12px 0 14px;
+            border-bottom: 2px solid var(--field-accent-soft);
+            background: transparent;
+            transition: border-bottom-color 0.18s var(--ease);
+        }
+
+        .check:focus-within {
+            border-bottom-color: var(--field-accent);
         }
 
         .check input[type="checkbox"] {
             appearance: none;
             -webkit-appearance: none;
-            width: 20px;
-            height: 20px;
-            border: 1.5px solid var(--line-strong);
-            border-radius: 5px;
-            background: var(--surface);
+            width: 18px;
+            height: 18px;
+            border: 1.5px solid var(--field-accent-soft);
+            border-radius: 4px;
+            background: transparent;
             cursor: pointer;
             position: relative;
             flex-shrink: 0;
+            transition: border-color 0.18s var(--ease), background 0.18s var(--ease), box-shadow 0.18s var(--ease);
         }
 
-	.check input[type="checkbox"]:checked {
-    	    background: color-mix(in srgb, var(--accent-deep) 78%, var(--ink));
-    	    border-color: color-mix(in srgb, var(--accent-deep) 78%, var(--ink));
-	}
+        .check input[type="checkbox"]:focus {
+            outline: none;
+            border-color: var(--field-accent);
+            box-shadow: 0 0 0 3px color-mix(in srgb, var(--field-accent) 16%, transparent);
+        }
 
-	.check input[type="checkbox"]:checked::after {
-	    content: "";
-	    position: absolute;
-	    inset: 0;
-	    background-repeat: no-repeat;
-	    background-position: center;
-    	    background-size: 12px 12px;
-    	    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M3.5 8.5 6.5 11.5 12.5 4.5' stroke='%2315202b' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-	}
+        .check input[type="checkbox"]:checked {
+            background: var(--field-accent);
+            border-color: var(--field-accent);
+        }
+
+        .check input[type="checkbox"]:checked::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 11px 11px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M3.5 8.5 6.5 11.5 12.5 4.5' stroke='%23ffffff' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+        }
 
         .check label {
             margin: 0;
@@ -725,7 +891,7 @@
                 <div class="grid-2 section-block">
                     <div class="section">
                         <label for="fecha_hechos">Fecha aproximada</label>
-                        <input id="fecha_hechos" type="date" name="fecha_hechos" value="{{ old('fecha_hechos') }}">
+                        <input id="fecha_hechos" type="text" name="fecha_hechos" value="{{ old('fecha_hechos') }}" placeholder="DD-MM-AAAA" autocomplete="off">
                         @error('fecha_hechos') <div class="field-error">{{ $message }}</div> @enderror
                     </div>
 
@@ -810,6 +976,7 @@
         </section>
     </main>
 
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
         const anonimaCheckbox = document.getElementById('anonima');
         const contactoBlock = document.getElementById('contacto-block');
@@ -819,10 +986,46 @@
             document.getElementById('telefono_denunciante'),
         ];
 
+        const fechaInput = document.getElementById('fecha_hechos');
         const causaTextoInput = document.getElementById('causa_denuncia_texto');
         const causaIdInput = document.getElementById('causa_denuncia_id');
         const causaResults = document.getElementById('causa-search-results');
         const causas = @json($causasJson);
+
+        if (window.flatpickr && fechaInput) {
+            flatpickr(fechaInput, {
+                dateFormat: 'Y-m-d',
+                altInput: true,
+                altInputClass: 'date-display-input',
+                altFormat: 'j F Y',
+                allowInput: false,
+                disableMobile: true,
+                monthSelectorType: 'static',
+                prevArrow: '<svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.5 3.75L5.25 9L10.5 14.25" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+                nextArrow: '<svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.5 3.75L12.75 9L7.5 14.25" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+                locale: {
+                    firstDayOfWeek: 1,
+                    weekdays: {
+                        shorthand: ['L', 'M', 'X', 'J', 'V', 'S', 'D'],
+                        longhand: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'],
+                    },
+                    months: {
+                        shorthand: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                        longhand: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                    },
+                    rangeSeparator: ' a ',
+                    weekAbbreviation: 'Sem',
+                    scrollTitle: 'Desplaza para cambiar',
+                    toggleTitle: 'Pulsa para alternar',
+                    amPM: ['AM', 'PM'],
+                    yearAriaLabel: 'Año',
+                    monthAriaLabel: 'Mes',
+                    hourAriaLabel: 'Hora',
+                    minuteAriaLabel: 'Minuto',
+                    time_24hr: true,
+                },
+            });
+        }
 
         function syncAnonymousState() {
             const isAnonymous = anonimaCheckbox.checked;

@@ -162,35 +162,40 @@
 
         input {
             width: 100%;
-            border: 1px solid rgba(21, 32, 43, 0.12);
-            border-radius: var(--radius-md);
-            padding: 14px 16px;
+            border: none;
+            border-bottom: 2px solid rgba(29, 79, 140, 0.32);
+            border-radius: 0;
+            padding: 14px 0 12px;
             font: inherit;
             color: var(--ink);
-            background: rgba(255,255,255,0.96);
-            transition: border-color 0.18s ease, box-shadow 0.18s ease;
+            background: transparent;
+            transition: border-bottom-color 0.18s ease, box-shadow 0.18s ease;
         }
 
-        input:focus {
+        input:not([type="file"]):focus {
             outline: none;
-            border-color: rgba(29, 79, 140, 0.48);
-            box-shadow: 0 0 0 4px rgba(29, 79, 140, 0.10);
+            border-bottom-color: var(--accent);
+            box-shadow: inset 0 -1px 0 var(--accent);
         }
 
         input[type="file"] {
             min-height: 56px;
-            padding: 10px 12px;
+            padding: 12px 0 14px;
+            border: none;
+            border-bottom: 2px solid rgba(29, 79, 140, 0.32);
+            border-radius: 0;
             color: var(--muted);
-            background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(243,247,252,0.98));
+            background: transparent;
         }
 
         input[type="file"]::file-selector-button {
             border: 0;
             margin-right: 14px;
-            padding: 11px 16px;
-            border-radius: 999px;
-            background: rgba(29, 79, 140, 0.12);
-            color: var(--accent-deep);
+            padding: 8px 0 6px;
+            border-radius: 0;
+            border-bottom: 2px solid var(--accent);
+            background: transparent;
+            color: var(--accent);
             font: inherit;
             font-weight: 800;
             cursor: pointer;

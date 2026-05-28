@@ -4,6 +4,8 @@
     $themeAccentContrast = $themeAccentContrast ?? (isset($empresa) ? $empresa->color_principal_contrast : '#ffffff');
     $themeAccentDeepContrast = $themeAccentDeepContrast ?? (isset($empresa) ? $empresa->color_secundario_contrast : '#ffffff');
     $themeBrandContrast = $themeBrandContrast ?? (isset($empresa) ? $empresa->brand_contrast : '#ffffff');
+    $themeFieldAccent = $themeFieldAccent ?? (isset($empresa) ? $empresa->color_principal_form_accent : '#1d4f8c');
+    $themeFieldAccentSoft = $themeFieldAccentSoft ?? (isset($empresa) ? $empresa->color_principal_form_accent_soft : '#567fb0');
 @endphp
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,6 +17,8 @@
         --accent-contrast: {{ $themeAccentContrast }};
         --accent-deep-contrast: {{ $themeAccentDeepContrast }};
         --brand-contrast: {{ $themeBrandContrast }};
+        --field-accent: {{ $themeFieldAccent }};
+        --field-accent-soft: {{ $themeFieldAccentSoft }};
 
         --accent-soft: color-mix(in srgb, var(--accent) 16%, white);
         --accent-fog: color-mix(in srgb, var(--accent) 8%, white);
@@ -267,15 +271,16 @@
     select,
     textarea {
         width: 100%;
-        border: 1px solid var(--line-strong);
-        border-radius: var(--radius-sm);
-        padding: 14px 16px;
+        border: none;
+        border-bottom: 2px solid var(--field-accent-soft);
+        border-radius: 0;
+        padding: 14px 0 12px;
         font: inherit;
         font-size: 0.97rem;
         color: var(--ink);
-        background: rgba(255, 255, 255, 0.92);
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6), 0 1px 2px rgba(15, 24, 34, 0.03);
-        transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease), background 0.2s var(--ease);
+        background: transparent;
+        box-shadow: none;
+        transition: border-bottom-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
     }
 
     input::placeholder,
@@ -283,19 +288,47 @@
         color: var(--muted-2);
     }
 
-    input:hover,
+    input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):hover,
     select:hover,
     textarea:hover {
-        border-color: rgba(15, 24, 34, 0.22);
+        border-bottom-color: var(--field-accent);
     }
 
-    input:focus,
+    input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):focus,
     select:focus,
     textarea:focus {
         outline: none;
-        border-color: color-mix(in srgb, var(--accent-deep) 60%, var(--ink));
-        box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent-deep) 14%, transparent), inset 0 1px 0 rgba(255, 255, 255, 0.6);
-        background: #fff;
+        border-bottom-color: var(--field-accent);
+        box-shadow: inset 0 -1px 0 var(--field-accent);
+    }
+
+    input[type="file"] {
+        border: none;
+        border-bottom: 2px solid var(--field-accent-soft);
+        border-radius: 0;
+        padding: 12px 0 14px;
+        background: transparent;
+        color: var(--muted);
+        transition: border-bottom-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
+    }
+
+    input[type="file"]:focus {
+        outline: none;
+        border-bottom-color: var(--field-accent);
+        box-shadow: inset 0 -1px 0 var(--field-accent);
+    }
+
+    input[type="file"]::file-selector-button {
+        border: 0;
+        border-bottom: 2px solid var(--field-accent);
+        border-radius: 0;
+        margin-right: 14px;
+        padding: 8px 0 6px;
+        background: transparent;
+        color: var(--field-accent);
+        font: inherit;
+        font-weight: 700;
+        cursor: pointer;
     }
 
     .notice,

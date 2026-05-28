@@ -62,6 +62,20 @@ class Empresa extends Model
         return $this->contrastTextFor($this->color_principal_hex);
     }
 
+    public function getColorPrincipalFormAccentAttribute(): string
+    {
+        return $this->formAccentFor($this->color_principal_hex);
+    }
+
+    public function getColorPrincipalFormAccentSoftAttribute(): string
+    {
+        return $this->mixHex(
+            $this->color_principal_hex,
+            $this->color_principal_form_accent,
+            0.42,
+        );
+    }
+
     public function getColorSecundarioContrastAttribute(): string
     {
         return $this->contrastTextFor($this->color_secundario_hex);
@@ -139,6 +153,21 @@ class Empresa extends Model
         return $luminance > 0.6 ? '#15202b' : '#ffffff';
     }
 
+    protected function formAccentFor(string $hex): string
+    {
+        [$red, $green, $blue] = $this->hexToRgb($hex);
+        $luminance = ((0.299 * $red) + (0.587 * $green) + (0.114 * $blue)) / 255;
+
+        $darkenAmount = match (true) {
+            $luminance >= 0.78 => 0.38,
+            $luminance >= 0.65 => 0.30,
+            $luminance >= 0.52 => 0.22,
+            default => 0.14,
+        };
+
+        return $this->darkenHex($hex, $darkenAmount);
+    }
+
     /**
      * @return array{0:int,1:int,2:int}
      */
@@ -155,5 +184,30 @@ class Empresa extends Model
             hexdec(substr($normalized, 2, 2)),
             hexdec(substr($normalized, 4, 2)),
         ];
+    }
+
+    protected function darkenHex(string $hex, float $amount): string
+    {
+        [$red, $green, $blue] = $this->hexToRgb($hex);
+
+        return sprintf(
+            '#%02x%02x%02x',
+            (int) round($red * (1 - $amount)),
+            (int) round($green * (1 - $amount)),
+            (int) round($blue * (1 - $amount)),
+        );
+    }
+
+    protected function mixHex(string $baseHex, string $targetHex, float $ratio): string
+    {
+        [$baseRed, $baseGreen, $baseBlue] = $this->hexToRgb($baseHex);
+        [$targetRed, $targetGreen, $targetBlue] = $this->hexToRgb($targetHex);
+
+        return sprintf(
+            '#%02x%02x%02x',
+            (int) round(($baseRed * (1 - $ratio)) + ($targetRed * $ratio)),
+            (int) round(($baseGreen * (1 - $ratio)) + ($targetGreen * $ratio)),
+            (int) round(($baseBlue * (1 - $ratio)) + ($targetBlue * $ratio)),
+        );
     }
 }
