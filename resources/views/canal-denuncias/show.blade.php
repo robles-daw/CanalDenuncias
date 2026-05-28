@@ -420,6 +420,10 @@
         }
 
         textarea {
+            background: #EEF3F8;
+        }
+
+        textarea {
             min-height: 144px;
             resize: vertical;
             line-height: 1.6;

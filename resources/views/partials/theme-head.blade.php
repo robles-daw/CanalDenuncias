@@ -292,6 +292,10 @@
         background: #EEF3F8;
     }
 
+    textarea {
+        background: #EEF3F8;
+    }
+
     input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):hover,
     select:hover,
     textarea:hover {

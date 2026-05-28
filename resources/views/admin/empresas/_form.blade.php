@@ -176,6 +176,10 @@
             background: #EEF3F8;
         }
 
+        textarea {
+            background: #EEF3F8;
+        }
+
         input:not([type="file"]):focus {
             outline: none;
             border-bottom-color: var(--accent);
