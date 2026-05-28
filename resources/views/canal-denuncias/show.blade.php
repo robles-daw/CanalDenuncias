@@ -14,8 +14,8 @@
             --accent-deep: {{ $empresa->color_secundario_hex }};
             --accent-contrast: {{ $empresa->color_principal_contrast }};
             --accent-deep-contrast: {{ $empresa->color_secundario_contrast }};
-            --field-accent: {{ $empresa->color_principal_form_accent }};
-            --field-accent-soft: {{ $empresa->color_principal_form_accent_soft }};
+            --field-accent: {{ $empresa->color_inputs_hex }};
+            --field-accent-soft: {{ $empresa->color_inputs_soft }};
             --ink: #16202a;
             --ink-soft: #45515f;
             --muted: #687483;
@@ -304,7 +304,7 @@
         .brand-info-row a {
             font-size: 0.9rem;
             line-height: 1.5;
-            color: var(--field-accent);
+            color: var(--ink);
             word-break: break-word;
         }
 
@@ -426,35 +426,60 @@
         }
 
         input[type="file"] {
-            min-height: 47px;
-            background: transparent;
-            border: none;
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        .file-field {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            height: 48px;
+            margin-top: -1px;
             border-bottom: 2px solid var(--field-accent-soft);
-            border-radius: 0;
-            padding: 13px 0 12px;
-            cursor: pointer;
-            color: var(--muted);
+            padding: 0;
             transition: border-bottom-color 0.18s var(--ease), box-shadow 0.18s var(--ease);
         }
 
-        input[type="file"]:focus {
+        .file-field:focus-within {
             border-bottom-color: var(--field-accent);
             box-shadow: inset 0 -1px 0 var(--field-accent);
         }
 
-        input[type="file"]::file-selector-button {
-            font-family: inherit;
+        .file-trigger {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 32px;
+            padding: 0 18px;
+            border: 1px solid color-mix(in srgb, var(--field-accent) 24%, transparent);
+            border-radius: 999px;
+            background: color-mix(in srgb, var(--field-accent) 10%, white);
+            color: var(--field-accent);
             font-size: 0.84rem;
             font-weight: 700;
-            border: 0;
-            border-bottom: 2px solid var(--field-accent);
-            border-radius: 0;
-            background: transparent;
-            color: var(--field-accent);
-            padding: 0 0 2px;
-            margin-right: 12px;
             cursor: pointer;
-            vertical-align: baseline;
+            transition: background 0.18s var(--ease), border-color 0.18s var(--ease), transform 0.18s var(--ease);
+        }
+
+        .file-trigger:hover {
+            transform: translateY(-1px);
+            background: color-mix(in srgb, var(--field-accent) 14%, white);
+        }
+
+        .file-name {
+            color: var(--muted);
+            line-height: 1.5;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .flatpickr-calendar {
@@ -751,7 +776,7 @@
         }
 
         .contact-block {
-            border-left: 3px solid color-mix(in srgb, var(--accent) 52%, white);
+            border-left: 3px solid var(--ink);
             padding-left: 18px;
             display: flex;
             flex-direction: column;
@@ -897,7 +922,11 @@
 
                     <div class="section">
                         <label for="adjuntos">Documentación adjunta</label>
-                        <input id="adjuntos" type="file" name="adjuntos[]" multiple>
+                        <div class="file-field">
+                            <input id="adjuntos" type="file" name="adjuntos[]" multiple>
+                            <label class="file-trigger" for="adjuntos">Elegir archivos</label>
+                            <span id="adjuntos-text" class="file-name">Ningún archivo seleccionado</span>
+                        </div>
                         <span class="hint">Puedes adjuntar varios archivos.</span>
                         @error('adjuntos.*') <div class="field-error">{{ $message }}</div> @enderror
                     </div>
@@ -956,10 +985,10 @@
 
                 <div class="section stack section-block">
                     <div class="check">
-                        <input id="acepta_politica_privacidad" type="checkbox" name="acepta_politica_privacidad" value="1" @checked(old('acepta_politica_privacidad'))>
-                        <label for="acepta_politica_privacidad">He leído y acepto la política de privacidad.</label>
+                        <input id="acepta_política_privacidad" type="checkbox" name="acepta_política_privacidad" value="1" @checked(old('acepta_política_privacidad'))>
+                        <label for="acepta_política_privacidad">He leído y acepto la política de privacidad.</label>
                     </div>
-                    @error('acepta_politica_privacidad') <div class="field-error">{{ $message }}</div> @enderror
+                    @error('acepta_política_privacidad') <div class="field-error">{{ $message }}</div> @enderror
 
                     <div class="check">
                         <input id="declara_veracidad" type="checkbox" name="declara_veracidad" value="1" @checked(old('declara_veracidad'))>
@@ -987,6 +1016,8 @@
         ];
 
         const fechaInput = document.getElementById('fecha_hechos');
+        const adjuntosInput = document.getElementById('adjuntos');
+        const adjuntosText = document.getElementById('adjuntos-text');
         const causaTextoInput = document.getElementById('causa_denuncia_texto');
         const causaIdInput = document.getElementById('causa_denuncia_id');
         const causaResults = document.getElementById('causa-search-results');
@@ -1025,6 +1056,26 @@
                     time_24hr: true,
                 },
             });
+        }
+
+        function syncAdjuntosText() {
+            if (!adjuntosInput || !adjuntosText) {
+                return;
+            }
+
+            const total = adjuntosInput.files ? adjuntosInput.files.length : 0;
+
+            if (total === 0) {
+                adjuntosText.textContent = 'Ningún archivo seleccionado';
+                return;
+            }
+
+            if (total === 1) {
+                adjuntosText.textContent = adjuntosInput.files[0].name;
+                return;
+            }
+
+            adjuntosText.textContent = `${total} archivos seleccionados`;
         }
 
         function syncAnonymousState() {
@@ -1083,6 +1134,7 @@
         }
 
         anonimaCheckbox.addEventListener('change', syncAnonymousState);
+        if (adjuntosInput) adjuntosInput.addEventListener('change', syncAdjuntosText);
 
         causaTextoInput.addEventListener('focus', () => { renderCausaResults(causaTextoInput.value); });
         causaTextoInput.addEventListener('input', () => {
@@ -1126,6 +1178,7 @@
         });
 
         syncAnonymousState();
+        syncAdjuntosText();
         syncCausaSelection();
     </script>
 </body>

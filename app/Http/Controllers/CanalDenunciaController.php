@@ -50,14 +50,14 @@ class CanalDenunciaController extends Controller
             'email_denunciante' => [$anonima ? 'nullable' : 'required_without:nombre_denunciante', 'nullable', 'email', 'max:255'],
             'telefono_denunciante' => ['nullable', 'string', 'max:30'],
             'personas_implicadas' => ['nullable', 'string', 'max:4000'],
-            'acepta_politica_privacidad' => ['accepted'],
+            'acepta_política_privacidad' => ['accepted'],
             'declara_veracidad' => ['accepted'],
             'adjuntos.*' => ['nullable', 'file', 'max:10240'],
         ], [
             'causa_denuncia_id.required' => 'Selecciona un motivo de denuncia de la lista sugerida.',
             'causa_denuncia_id.exists' => 'Selecciona un motivo de denuncia válido de la lista sugerida.',
-            'acepta_politica_privacidad.accepted' => 'Debes aceptar la politica de privacidad.',
-            'declara_veracidad.accepted' => 'Debes confirmar la declaracion de veracidad.',
+            'acepta_politica_privacidad.accepted' => 'Debes aceptar la política de privacidad.',
+            'declara_veracidad.accepted' => 'Debes confirmar la declaración de veracidad.',
         ]);
 
         $denuncia = DB::transaction(function () use ($request, $empresa, $validated, $anonima) {
@@ -74,7 +74,7 @@ class CanalDenunciaController extends Controller
                 'nombre_denunciante' => $anonima ? null : ($validated['nombre_denunciante'] ?? null),
                 'email_denunciante' => $anonima ? null : ($validated['email_denunciante'] ?? null),
                 'telefono_denunciante' => $anonima ? null : ($validated['telefono_denunciante'] ?? null),
-                'acepta_politica_privacidad' => true,
+                'acepta_política_privacidad' => true,
                 'declara_veracidad' => true,
                 'ip_origen' => $request->ip(),
                 'user_agent' => Str::limit((string) $request->userAgent(), 65535, ''),

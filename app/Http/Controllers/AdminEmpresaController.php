@@ -183,6 +183,12 @@ class AdminEmpresaController extends Controller
             ]);
         }
 
+        if ($request->input('color_inputs') === '') {
+            $request->merge([
+                'color_inputs' => null,
+            ]);
+        }
+
         return $request->validate([
             'nombre' => ['required', 'string', 'max:255'],
             'dominio' => ['required', 'string', 'max:255', 'regex:/^[A-Za-z0-9._-]+$/', 'unique:empresas,dominio,'.($empresaId ?? 'NULL').',id'],
@@ -192,9 +198,11 @@ class AdminEmpresaController extends Controller
             'pdf_normativa' => ['nullable', 'file', 'mimes:pdf', 'max:10240'],
             'color_principal' => ['required', 'string', 'regex:/^#(?:[0-9a-fA-F]{3}){1,2}$/'],
             'color_secundario' => ['nullable', 'string', 'regex:/^#(?:[0-9a-fA-F]{3}){1,2}$/'],
+            'color_inputs' => ['nullable', 'string', 'regex:/^#(?:[0-9a-fA-F]{3}){1,2}$/'],
         ], [
             'color_principal.regex' => 'Introduce un color principal válido en formato hexadecimal.',
             'color_secundario.regex' => 'Introduce un color secundario válido en formato hexadecimal o déjalo vacío.',
+            'color_inputs.regex' => 'Introduce un color de inputs válido en formato hexadecimal o déjalo vacío.',
         ]);
     }
 
@@ -211,6 +219,7 @@ class AdminEmpresaController extends Controller
         $empresa->activa = true;
         $empresa->color_principal = $data['color_principal'];
         $empresa->color_secundario = $data['color_secundario'] ?: null;
+        $empresa->color_inputs = $data['color_inputs'] ?: null;
 
         if (! empty($data['password'])) {
             $empresa->password = $data['password'];

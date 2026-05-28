@@ -4,8 +4,8 @@
     $themeAccentContrast = $themeAccentContrast ?? (isset($empresa) ? $empresa->color_principal_contrast : '#ffffff');
     $themeAccentDeepContrast = $themeAccentDeepContrast ?? (isset($empresa) ? $empresa->color_secundario_contrast : '#ffffff');
     $themeBrandContrast = $themeBrandContrast ?? (isset($empresa) ? $empresa->brand_contrast : '#ffffff');
-    $themeFieldAccent = $themeFieldAccent ?? (isset($empresa) ? $empresa->color_principal_form_accent : '#1d4f8c');
-    $themeFieldAccentSoft = $themeFieldAccentSoft ?? (isset($empresa) ? $empresa->color_principal_form_accent_soft : '#567fb0');
+    $themeFieldAccent = $themeFieldAccent ?? (isset($empresa) ? $empresa->color_inputs_hex : '#1d4f8c');
+    $themeFieldAccentSoft = $themeFieldAccentSoft ?? (isset($empresa) ? $empresa->color_inputs_soft : '#567fb0');
 @endphp
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

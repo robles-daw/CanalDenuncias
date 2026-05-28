@@ -511,6 +511,21 @@
                                         <button type="button" class="ghost-button" id="clear-secondary">Sin color secundario</button>
                                     </div>
                                 </div>
+
+                                <div class="color-block">
+                                    <label for="color_inputs_hex">Color inputs</label>
+                                    <div class="color-input-row">
+                                        <input id="color_inputs_picker" class="color-picker" type="color" value="{{ old('color_inputs', $empresa->color_inputs ?: ($empresa->color_inputs_hex ?? '#1d4f8c')) }}">
+                                        <input id="color_inputs_hex" class="hex-input" type="text" name="color_inputs" value="{{ old('color_inputs', $empresa->color_inputs ?: '') }}" placeholder="Opcional">
+                                        <button type="button" class="picker-button" data-open-picker="color_inputs_picker">Elegir</button>
+                                    </div>
+                                    @error('color_inputs') <div class="error">{{ $message }}</div> @enderror
+                                    <span class="hint">Define el color real de líneas, calendario y controles de formulario. Si lo dejas vacío, se generará a partir del principal.</span>
+
+                                    <div class="secondary-actions">
+                                        <button type="button" class="ghost-button" id="clear-inputs">Usar automático</button>
+                                    </div>
+                                </div>
                             </div>
                         </section>
 
@@ -533,6 +548,10 @@
                                 <div class="preview-color {{ old('color_secundario', $empresa->color_secundario ?: '') ? '' : 'is-empty' }}" id="secondary-preview" style="--preview-fill: {{ old('color_secundario', $empresa->color_secundario ?: '#0f2744') }};">
                                     <strong>Secundario</strong>
                                     <div class="preview-token" id="secondary-preview-text">{{ old('color_secundario', $empresa->color_secundario ?: 'Sin definir') }}</div>
+                                </div>
+                                <div class="preview-color {{ old('color_inputs', $empresa->color_inputs ?: '') ? '' : 'is-empty' }}" id="inputs-preview" style="--preview-fill: {{ old('color_inputs', $empresa->color_inputs ?: ($empresa->color_inputs_hex ?? '#1d4f8c')) }};">
+                                    <strong>Inputs</strong>
+                                    <div class="preview-token" id="inputs-preview-text">{{ old('color_inputs', $empresa->color_inputs ?: 'Automático') }}</div>
                                 </div>
                             </div>
                         </div>
@@ -573,11 +592,16 @@
         const primaryHex = document.getElementById('color_principal_hex');
         const secondaryPicker = document.getElementById('color_secundario_picker');
         const secondaryHex = document.getElementById('color_secundario_hex');
+        const inputsPicker = document.getElementById('color_inputs_picker');
+        const inputsHex = document.getElementById('color_inputs_hex');
         const primaryPreview = document.getElementById('primary-preview');
         const primaryPreviewText = document.getElementById('primary-preview-text');
         const secondaryPreview = document.getElementById('secondary-preview');
         const secondaryPreviewText = document.getElementById('secondary-preview-text');
+        const inputsPreview = document.getElementById('inputs-preview');
+        const inputsPreviewText = document.getElementById('inputs-preview-text');
         const clearSecondaryButton = document.getElementById('clear-secondary');
+        const clearInputsButton = document.getElementById('clear-inputs');
 
         function normalizeHex(value, fallback = '') {
             const normalized = String(value || '').trim().toUpperCase();
@@ -587,6 +611,7 @@
         function syncPreview() {
             const primary = normalizeHex(primaryHex.value, '#1D4F8C');
             const secondary = normalizeHex(secondaryHex.value, '');
+            const inputs = normalizeHex(inputsHex.value, '');
 
             primaryPreview.style.setProperty('--preview-fill', primary);
             primaryPreviewText.textContent = primary;
@@ -601,6 +626,18 @@
                 secondaryPreview.style.setProperty('--preview-fill', '#F2ECE4');
                 secondaryPreview.classList.add('is-empty');
                 secondaryPreviewText.textContent = 'Sin definir';
+            }
+
+            if (inputs) {
+                inputsPreview.style.setProperty('--preview-fill', inputs);
+                inputsPreview.classList.remove('is-empty');
+                inputsPreviewText.textContent = inputs;
+                inputsPicker.value = inputs;
+            } else {
+                inputsPreview.style.setProperty('--preview-fill', primary);
+                inputsPreview.classList.add('is-empty');
+                inputsPreviewText.textContent = 'Automático';
+                inputsPicker.value = primary;
             }
         }
 
@@ -630,8 +667,26 @@
             syncPreview();
         });
 
+        inputsPicker.addEventListener('input', () => {
+            inputsHex.value = inputsPicker.value.toUpperCase();
+            syncPreview();
+        });
+
+        inputsHex.addEventListener('input', () => {
+            const normalized = normalizeHex(inputsHex.value);
+            if (normalized) {
+                inputsPicker.value = normalized;
+            }
+            syncPreview();
+        });
+
         clearSecondaryButton.addEventListener('click', () => {
             secondaryHex.value = '';
+            syncPreview();
+        });
+
+        clearInputsButton.addEventListener('click', () => {
+            inputsHex.value = '';
             syncPreview();
         });
 

@@ -29,6 +29,7 @@ class EmpresaSeeder extends Seeder
                 'pdf_normativa' => null,
                 'color_principal' => '#b24a1b',
                 'color_secundario' => '#8e3710',
+                'color_inputs' => '#8e3710',
                 'activa' => true,
             ],
         );

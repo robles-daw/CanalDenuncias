@@ -33,6 +33,7 @@ class Empresa extends Model
         'pdf_normativa',
         'color_principal',
         'color_secundario',
+        'color_inputs',
         'activa',
     ];
 
@@ -67,12 +68,17 @@ class Empresa extends Model
         return $this->formAccentFor($this->color_principal_hex);
     }
 
-    public function getColorPrincipalFormAccentSoftAttribute(): string
+    public function getColorInputsHexAttribute(): string
+    {
+        return $this->color_inputs ?: $this->color_principal_form_accent;
+    }
+
+    public function getColorInputsSoftAttribute(): string
     {
         return $this->mixHex(
-            $this->color_principal_hex,
-            $this->color_principal_form_accent,
-            0.42,
+            $this->color_inputs_hex,
+            $this->formAccentFor($this->color_inputs_hex),
+            0.32,
         );
     }
 
