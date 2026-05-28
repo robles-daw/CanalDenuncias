@@ -249,7 +249,7 @@
             height: 36px;
             color: #fff;
         }
- 	
+
 	.brand-meta {
 	    color: #000
 	}
@@ -1014,6 +1014,12 @@
                     <button type="submit">Enviar denuncia</button>
                 </div>
             </form>
+
+            <div class="semi-footer">
+                <a href="{{ $empresa->politica_privacidad_url }}" target="_blank" rel="noopener noreferrer">Política de privacidad</a>
+                <a href="{{ $empresa->politica_cookies_url }}" target="_blank" rel="noopener noreferrer">Política de cookies</a>
+                <a href="{{ $empresa->aviso_legal_url }}" target="_blank" rel="noopener noreferrer">Aviso legal</a>
+            </div>
 
         </section>
     </main>

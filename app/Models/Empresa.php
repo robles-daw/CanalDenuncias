@@ -34,6 +34,9 @@ class Empresa extends Model
         'color_principal',
         'color_secundario',
         'color_inputs',
+        'politica_privacidad_url',
+        'politica_cookies_url',
+        'aviso_legal_url',
         'activa',
     ];
 

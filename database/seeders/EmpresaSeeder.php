@@ -30,6 +30,9 @@ class EmpresaSeeder extends Seeder
                 'color_principal' => '#b24a1b',
                 'color_secundario' => '#8e3710',
                 'color_inputs' => '#8e3710',
+                'politica_privacidad_url' => 'https://empresa-demo.es/politica-de-privacidad',
+                'politica_cookies_url' => 'https://empresa-demo.es/politica-de-cookies',
+                'aviso_legal_url' => 'https://empresa-demo.es/aviso-legal',
                 'activa' => true,
             ],
         );

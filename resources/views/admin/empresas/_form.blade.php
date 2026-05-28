@@ -471,6 +471,33 @@
                         </section>
 
                         <section class="panel">
+                            <h2 class="panel-title">Enlaces legales</h2>
+
+                            <div class="form-grid">
+                                <div class="field-full">
+                                    <label for="politica_privacidad_url">Política de privacidad</label>
+                                    <input id="politica_privacidad_url" type="url" name="politica_privacidad_url" value="{{ old('politica_privacidad_url', $empresa->politica_privacidad_url) }}" required>
+                                    @error('politica_privacidad_url') <div class="error">{{ $message }}</div> @enderror
+                                    <span class="hint">Introduce la URL completa. Este enlace se mostrará en el semipie del canal.</span>
+                                </div>
+
+                                <div class="field-full">
+                                    <label for="politica_cookies_url">Política de cookies</label>
+                                    <input id="politica_cookies_url" type="url" name="politica_cookies_url" value="{{ old('politica_cookies_url', $empresa->politica_cookies_url) }}" required>
+                                    @error('politica_cookies_url') <div class="error">{{ $message }}</div> @enderror
+                                    <span class="hint">Introduce la URL completa. Este enlace se mostrará en el semipie del canal.</span>
+                                </div>
+
+                                <div class="field-full">
+                                    <label for="aviso_legal_url">Aviso legal</label>
+                                    <input id="aviso_legal_url" type="url" name="aviso_legal_url" value="{{ old('aviso_legal_url', $empresa->aviso_legal_url) }}" required>
+                                    @error('aviso_legal_url') <div class="error">{{ $message }}</div> @enderror
+                                    <span class="hint">Introduce la URL completa. Este enlace se mostrará en el semipie del canal.</span>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section class="panel">
                             <h2 class="panel-title">Recursos del canal</h2>
 
                             <div class="form-grid">

@@ -199,10 +199,19 @@ class AdminEmpresaController extends Controller
             'color_principal' => ['required', 'string', 'regex:/^#(?:[0-9a-fA-F]{3}){1,2}$/'],
             'color_secundario' => ['nullable', 'string', 'regex:/^#(?:[0-9a-fA-F]{3}){1,2}$/'],
             'color_inputs' => ['nullable', 'string', 'regex:/^#(?:[0-9a-fA-F]{3}){1,2}$/'],
+            'politica_privacidad_url' => ['required', 'url', 'max:2048'],
+            'politica_cookies_url' => ['required', 'url', 'max:2048'],
+            'aviso_legal_url' => ['required', 'url', 'max:2048'],
         ], [
             'color_principal.regex' => 'Introduce un color principal válido en formato hexadecimal.',
             'color_secundario.regex' => 'Introduce un color secundario válido en formato hexadecimal o déjalo vacío.',
             'color_inputs.regex' => 'Introduce un color de inputs válido en formato hexadecimal o déjalo vacío.',
+            'politica_privacidad_url.required' => 'La URL de la política de privacidad es obligatoria.',
+            'politica_privacidad_url.url' => 'Introduce una URL válida para la política de privacidad.',
+            'politica_cookies_url.required' => 'La URL de la política de cookies es obligatoria.',
+            'politica_cookies_url.url' => 'Introduce una URL válida para la política de cookies.',
+            'aviso_legal_url.required' => 'La URL del aviso legal es obligatoria.',
+            'aviso_legal_url.url' => 'Introduce una URL válida para el aviso legal.',
         ]);
     }
 
@@ -220,6 +229,9 @@ class AdminEmpresaController extends Controller
         $empresa->color_principal = $data['color_principal'];
         $empresa->color_secundario = $data['color_secundario'] ?: null;
         $empresa->color_inputs = $data['color_inputs'] ?: null;
+        $empresa->politica_privacidad_url = $data['politica_privacidad_url'];
+        $empresa->politica_cookies_url = $data['politica_cookies_url'];
+        $empresa->aviso_legal_url = $data['aviso_legal_url'];
 
         if (! empty($data['password'])) {
             $empresa->password = $data['password'];
