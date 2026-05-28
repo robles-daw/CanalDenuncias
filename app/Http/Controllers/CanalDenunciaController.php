@@ -50,7 +50,7 @@ class CanalDenunciaController extends Controller
             'email_denunciante' => [$anonima ? 'nullable' : 'required_without:nombre_denunciante', 'nullable', 'email', 'max:255'],
             'telefono_denunciante' => ['nullable', 'string', 'max:30'],
             'personas_implicadas' => ['nullable', 'string', 'max:4000'],
-            'acepta_política_privacidad' => ['accepted'],
+            'acepta_politica_privacidad' => ['accepted'],
             'declara_veracidad' => ['accepted'],
             'adjuntos.*' => ['nullable', 'file', 'max:10240'],
         ], [
@@ -74,7 +74,7 @@ class CanalDenunciaController extends Controller
                 'nombre_denunciante' => $anonima ? null : ($validated['nombre_denunciante'] ?? null),
                 'email_denunciante' => $anonima ? null : ($validated['email_denunciante'] ?? null),
                 'telefono_denunciante' => $anonima ? null : ($validated['telefono_denunciante'] ?? null),
-                'acepta_política_privacidad' => true,
+                'acepta_politica_privacidad' => true,
                 'declara_veracidad' => true,
                 'ip_origen' => $request->ip(),
                 'user_agent' => Str::limit((string) $request->userAgent(), 65535, ''),

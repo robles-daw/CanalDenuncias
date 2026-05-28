@@ -1047,10 +1047,10 @@
 
                 <div class="section stack section-block">
                     <div class="check">
-                        <input id="acepta_política_privacidad" type="checkbox" name="acepta_política_privacidad" value="1" @checked(old('acepta_política_privacidad'))>
-                        <label for="acepta_política_privacidad">He leído y acepto la política de privacidad.</label>
+                        <input id="acepta_politica_privacidad" type="checkbox" name="acepta_politica_privacidad" value="1" @checked(old('acepta_politica_privacidad'))>
+                        <label for="acepta_politica_privacidad">He leído y acepto la política de privacidad.</label>
                     </div>
-                    @error('acepta_política_privacidad') <div class="field-error">{{ $message }}</div> @enderror
+                    @error('acepta_politica_privacidad') <div class="field-error">{{ $message }}</div> @enderror
 
                     <div class="check">
                         <input id="declara_veracidad" type="checkbox" name="declara_veracidad" value="1" @checked(old('declara_veracidad'))>
