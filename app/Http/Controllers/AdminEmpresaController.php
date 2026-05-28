@@ -185,7 +185,7 @@ class AdminEmpresaController extends Controller
 
         return $request->validate([
             'nombre' => ['required', 'string', 'max:255'],
-            'dominio' => ['required', 'string', 'max:255', 'alpha_dash', 'unique:empresas,dominio,'.($empresaId ?? 'NULL').',id'],
+            'dominio' => ['required', 'string', 'max:255', 'regex:/^[A-Za-z0-9._-]+$/', 'unique:empresas,dominio,'.($empresaId ?? 'NULL').',id'],
             'email' => ['required', 'email', 'max:255'],
             'password' => [$empresa ? 'nullable' : 'required', 'string', 'min:8', 'max:255'],
             'logo' => [$empresa ? 'nullable' : 'required', 'file', 'mimes:jpg,jpeg,png,webp,svg', 'max:5120'],

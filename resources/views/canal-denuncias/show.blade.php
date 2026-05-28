@@ -215,9 +215,15 @@
             color: var(--accent-contrast);
         }
 
+	.brand-top {
+	   display: flex;
+	   gap: 35px;
+	   align-items: center;
+	}
+
         .brand-logo {
-            width: 64px;
-            height: 64px;
+            width: 85px;
+            height: 85px;
             border-radius: 14px;
             overflow: hidden;
             background: rgba(255, 255, 255, 0.14);
@@ -292,12 +298,12 @@
         }
 
         .brand-info-row span,
-        .brand-info-row a {
-            font-size: 0.9rem;
-            line-height: 1.5;
-            color: color-mix(in srgb, var(--accent-contrast) 86%, white);
-            word-break: break-word;
-        }
+	.brand-info-row a {
+    	    font-size: 0.9rem;
+   	    line-height: 1.5;
+   	    color: var(--accent);
+   	    word-break: break-word;
+	}
 
         .button,
         button {
@@ -545,21 +551,20 @@
             flex-shrink: 0;
         }
 
-        .check input[type="checkbox"]:checked {
-            background: var(--accent-deep);
-            border-color: var(--accent-deep);
-        }
+	.check input[type="checkbox"]:checked {
+    	    background: color-mix(in srgb, var(--accent-deep) 78%, var(--ink));
+    	    border-color: color-mix(in srgb, var(--accent-deep) 78%, var(--ink));
+	}
 
-        .check input[type="checkbox"]:checked::after {
-            content: "✓";
-            position: absolute;
-            inset: 0;
-            display: grid;
-            place-items: center;
-            color: var(--accent-contrast);
-            font-size: 12px;
-            font-weight: 700;
-        }
+	.check input[type="checkbox"]:checked::after {
+	    content: "";
+	    position: absolute;
+	    inset: 0;
+	    background-repeat: no-repeat;
+	    background-position: center;
+    	    background-size: 12px 12px;
+    	    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M3.5 8.5 6.5 11.5 12.5 4.5' stroke='%2315202b' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+	}
 
         .check label {
             margin: 0;
