@@ -415,6 +415,10 @@
             transition: border-bottom-color 0.18s var(--ease), box-shadow 0.18s var(--ease);
         }
 
+        input[type="text"] {
+            background: #EEF3F8;
+        }
+
         textarea {
             min-height: 144px;
             resize: vertical;
