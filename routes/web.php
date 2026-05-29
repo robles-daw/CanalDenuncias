@@ -7,7 +7,8 @@ use App\Http\Controllers\EmpresaDenunciaController;
 use App\Http\Controllers\EmpresaPanelAuthController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [CanalDenunciaController::class, 'landing'])->name('canal-denuncias.landing');
+Route::redirect('/', '/canaldedenuncias');
+Route::get('/canaldedenuncias', [CanalDenunciaController::class, 'landing'])->name('canal-denuncias.landing');
 
 Route::prefix('/canaldedenuncias/admin')->group(function () {
     Route::get('/', [AdminAuthController::class, 'showLogin'])->name('admin.login');
