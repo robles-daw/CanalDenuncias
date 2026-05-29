@@ -9,12 +9,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [CanalDenunciaController::class, 'landing'])->name('canal-denuncias.landing');
 
-Route::prefix('/admin')->group(function () {
-    Route::get('/login', [AdminAuthController::class, 'showLogin'])->name('admin.login');
-    Route::post('/login', [AdminAuthController::class, 'login'])->name('admin.login.submit');
+Route::prefix('/canaldedenuncias/admin')->group(function () {
+    Route::get('/', [AdminAuthController::class, 'showLogin'])->name('admin.login');
+    Route::post('/', [AdminAuthController::class, 'login'])->name('admin.login.submit');
 
     Route::middleware('admin.auth')->group(function () {
-        Route::get('/', fn () => redirect()->route('admin.empresas.index'))->name('admin.home');
+        Route::get('/inicio', fn () => redirect()->route('admin.empresas.index'))->name('admin.home');
         Route::post('/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
 
         Route::get('/empresas', [AdminEmpresaController::class, 'index'])->name('admin.empresas.index');
@@ -27,7 +27,7 @@ Route::prefix('/admin')->group(function () {
     });
 });
 
-Route::prefix('/empresa/{empresa:dominio}')->group(function () {
+Route::prefix('/canaldedenuncias/empresa/{empresa:dominio}')->group(function () {
     Route::get('/', fn ($empresa) => redirect()->route('empresa.panel.login', $empresa))
         ->name('empresa.panel.home');
     Route::get('/login', [EmpresaPanelAuthController::class, 'showLogin'])->name('empresa.panel.login');

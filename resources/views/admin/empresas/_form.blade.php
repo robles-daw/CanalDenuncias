@@ -599,7 +599,7 @@
 
                             <div class="meta-item">
                                 <strong>Acceso empresa</strong>
-                                <span>/empresa/{{ old('dominio', $empresa->dominio ?: 'dominio-empresa') }}</span>
+                                <span>/canaldedenuncias/empresa/{{ old('dominio', $empresa->dominio ?: 'dominio-empresa') }}</span>
                             </div>
 
                             <div class="meta-item">

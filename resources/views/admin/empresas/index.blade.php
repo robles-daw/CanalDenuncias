@@ -293,7 +293,7 @@
                                     <div>
                                         <div class="empresa-name">{{ $empresa->nombre }}</div>
                                         <div class="empresa-meta">/canaldedenuncias/{{ $empresa->dominio }} · {{ $empresa->email }}</div>
-                                        <div class="empresa-meta">/empresa/{{ $empresa->dominio }}</div>
+                                        <div class="empresa-meta">/canaldedenuncias/empresa/{{ $empresa->dominio }}</div>
                                     </div>
                                 </div>
 
