@@ -20,6 +20,8 @@
             margin: 0;
             font-size: clamp(2.8rem, 6vw, 4.4rem);
             line-height: 0.96;
+            overflow-wrap: anywhere;
+            word-break: break-word;
         }
 
         .grid {
@@ -52,6 +54,12 @@
         .meta-item strong {
             display: block;
             margin-bottom: 4px;
+        }
+
+        .text-block {
+            white-space: pre-line;
+            overflow-wrap: anywhere;
+            word-break: break-word;
         }
 
         ul {
@@ -106,7 +114,7 @@
                     <section class="panel">
                         <div class="meta-item">
                             <strong>Descripción</strong>
-                            <div style="white-space:pre-line;">{{ $denuncia->descripcion_hechos }}</div>
+                            <div class="text-block">{{ $denuncia->descripcion_hechos }}</div>
                         </div>
                     </section>
 

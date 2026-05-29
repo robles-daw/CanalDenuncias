@@ -15,7 +15,7 @@ class CausaDenunciaSeeder extends Seeder
     {
         $causas = [
             'Acoso laboral o sexual',
-            'Conflictos de interes',
+            'Conflictos de interés',
             'Delitos informaticos',
             'Discriminacion',
             'Falsificacion de documentos',
