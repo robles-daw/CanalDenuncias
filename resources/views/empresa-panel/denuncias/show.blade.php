@@ -160,15 +160,41 @@
                         </div>
                         <div class="meta-item">
                             <strong>Fecha de recepción</strong>
-                            <span>{{ $denuncia->fecha_recepcion?->format('d/m/Y H:i') }}</span>
+                            <span>{{ $denuncia->fecha_recepcion?->timezone('Europe/Madrid')->format('d/m/Y H:i') }}</span>
                         </div>
                         <div class="meta-item">
                             <strong>Anónima</strong>
                             <span>{{ $denuncia->anonima ? 'Sí' : 'No' }}</span>
                         </div>
+                        @unless ($denuncia->anonima)
+                            <div class="meta-item">
+                                <strong>Datos del denunciante</strong>
+                                <div class="stack" style="gap: 6px;">
+                                    @if ($denuncia->nombre_denunciante)
+                                        <span><strong>Nombre:</strong> {{ $denuncia->nombre_denunciante }}</span>
+                                    @endif
+                                    @if ($denuncia->email_denunciante)
+                                        <span><strong>Correo:</strong> {{ $denuncia->email_denunciante }}</span>
+                                    @endif
+                                    @if ($denuncia->telefono_denunciante)
+                                        <span><strong>Teléfono:</strong> {{ $denuncia->telefono_denunciante }}</span>
+                                    @endif
+                                </div>
+                            </div>
+                        @endunless
                         <div class="meta-item">
                             <strong>Riesgo inmediato</strong>
                             <span>{{ $denuncia->riesgo_inmediato ? 'Sí' : 'No' }}</span>
+                        </div>
+                        <div class="meta-item">
+                            <strong>Continúa produciéndose</strong>
+                            <span>
+                                @if (is_null($denuncia->sigue_ocurriendo))
+                                    No indicado
+                                @else
+                                    {{ $denuncia->sigue_ocurriendo ? 'Sí' : 'No' }}
+                                @endif
+                            </span>
                         </div>
                     </section>
 
